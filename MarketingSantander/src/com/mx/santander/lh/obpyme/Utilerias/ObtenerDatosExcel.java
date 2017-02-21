@@ -6,6 +6,11 @@
 package com.mx.santander.lh.obpyme.Utilerias;
 
 import com.mx.santander.lh.obpyme.Objetos.MarketingObjeto;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 /**
  *
@@ -13,16 +18,25 @@ import com.mx.santander.lh.obpyme.Objetos.MarketingObjeto;
  */
 public class ObtenerDatosExcel {
     
-    private MarketingObjeto objetoMarketing = new MarketingObjeto();
-    
-    public MarketingObjeto DatosMarketing(){
-        objetoMarketing.setCasoPrueba("IDENTIFICAR SI BANCO SANTANDER SE ENCUENTRA EN EL TOP TEN DE BUSQUEDAS EN GOOGLE");
-        objetoMarketing.setEmpresaMarketing("Santander");
-        objetoMarketing.setPosicionamientoMarketingTopURL("Banco Santander");
-        objetoMarketing.setTopNumber(1);
+    public MarketingObjeto RecuperarDatosExcel() throws FileNotFoundException, IOException{
+        
+        MarketingObjeto objetoMarketing = new MarketingObjeto();
+        
+        FileInputStream file = new FileInputStream("DataTestMarketing.xls");
+        HSSFWorkbook workBook = new HSSFWorkbook(file);
+        HSSFSheet sheet = workBook.getSheetAt(0);
+        
+        for(int i=1;i<= sheet.getLastRowNum(); i++){
+            objetoMarketing.setCasoPrueba(sheet.getRow(i).getCell(0).toString());
+            objetoMarketing.setEmpresaMarketing(sheet.getRow(i).getCell(1).toString());
+            objetoMarketing.setPosicionamientoMarketingTopURL(sheet.getRow(i).getCell(2).toString());
+            objetoMarketing.setTopNumber(Integer.parseInt(sheet.getRow(i).getCell(3).toString()));
+        }
         
         return objetoMarketing;
         
     }
+}   
     
-}
+    
+

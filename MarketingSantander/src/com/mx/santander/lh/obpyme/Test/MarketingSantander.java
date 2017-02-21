@@ -6,6 +6,7 @@
 package com.mx.santander.lh.obpyme.Test;
 
 import com.mx.santander.lh.obpyme.Operacion.OperacionesMarketingSantander;
+import java.io.IOException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -15,7 +16,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  */
 public class MarketingSantander {
     
-    public static void main(String[] args) throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException, IOException{
         
         WebDriver browserDriver = new ChromeDriver();
         OperacionesMarketingSantander oMarketing = new OperacionesMarketingSantander();
