@@ -34,32 +34,42 @@ public class OperacionesMarketingSantander {
         Thread.sleep(3000);
         if(validacionesMArketing.ValidaElementosMarketingSantander(driver)){
             System.out.println("----- INICIA TEST AUTOMATIZADO -----");
+            System.out.println("------------------------------------");
             System.out.println("Caso de prueba: " + datos.RecuperarDatosExcel().getCasoPrueba());
-            System.out.println("-----");
+            System.out.println("");
             //REALIZA LA BUSQUEDA DE LA EMPRESA A LA QUE SE LE VA A REALIZAR EL MARKETING
             elementos.ElementoTextInputBusqueda(driver).sendKeys(datos.RecuperarDatosExcel().getEmpresaMarketing());
             elementos.ElementoTextInputBusqueda(driver).sendKeys(Keys.ENTER);
             Thread.sleep(3000);
-            List<WebElement> listaElementos = elementos.ListaURLBusqueda(driver);
+            
+            System.out.println("----- DATOS DE PRUEBA -----");
+            System.out.println("---------------------------");
+            System.out.println("EMPRESA: " +  datos.RecuperarDatosExcel().getEmpresaMarketing());
+            System.out.println("ENLACE TOP 1: " + datos.RecuperarDatosExcel().getPosicionamientoMarketingTopURL());
+            System.out.println("TOP NUMBER: " + datos.RecuperarDatosExcel().getTopNumber());
+            System.out.println("");
             
             //VALIDA SI SE ENCONTRARON VALORES EN LA BUSQUEDA.
-            if(listaElementos.size() > 0){
+            if(validacionesMArketing.ValidaListaElementosResultados(driver)){
+                List<WebElement> listaElementos = elementos.ListaURLBusqueda(driver);
                 //RECORREMOS LA LISTA DE ELEMENTOS RECUPERADOS PARA IDENTIFICAR SI LA EMPRESA DE MARKETING SE ENCUENTRA EN LA POSICION INDICADA
+                System.out.println("----- RESULTADO DEL TEST AUTOMATIZADO -----");
+                System.out.println("-------------------------------------------");
+               
                 int contador = 0;
                 for(WebElement elemento:listaElementos){
                     contador ++;
+                    //LA EMPRESA SE ENCUENTRA EN EL TOP TEN
                     if(elemento.getText().equals(datos.RecuperarDatosExcel().getPosicionamientoMarketingTopURL()) && contador == datos.RecuperarDatosExcel().getTopNumber()){
                         System.out.println("LA EMPRESA SE ENCUENTRA EN EL TOP TEN DE BUSQUEDA EN GOOGLE");
                         driver.close();
                         break;
                     }
-                    
-                    
+                    //LA EMPRESA NO SE ENCUENTRA EN EL TOP TEN.
                     if(contador == listaElementos.size()){
                         System.out.println("LA EMPRESA NO SE ENCUENTRA EN EL TOP TEN INICIAR CAMPAÑA DE MARKETING");
                         driver.close();
-                    }
-                    
+                    }   
                 }
             }
         }else{

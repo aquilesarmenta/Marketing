@@ -25,4 +25,12 @@ public class ValidacionMarketingSantander {
         }
     }
     
+    public boolean ValidaListaElementosResultados(WebDriver driver){
+        if(elementosPage.ListaURLBusqueda(driver).size()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
 }
